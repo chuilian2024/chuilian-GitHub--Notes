@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>人联</title>
+	</head>
+    <style>
+        ul,li{
+            margin:0;
+            padding:0;
+        }
+        ul{
+            list-style:none;
+        }
+        /* 总页面盒子 */
+        .section-wrap{
+            width:100%;/* 盒子大小 */
+            height:100%;
+            position: fixed;/* 固定定位 上边 */
+            top:0;
+            overflow:visible;/* 溢出部分可以被显示出 */
+/* 变换（transform）的过渡效果 时长一秒  使用了一个叫做cubic-bezier的贝塞尔曲线函数  参数为(0.86,0,0.03,1) */
+            transition:transform 1s cubic-bezier(0.86,0,0.03,1);
+         }
+        /* 单独页面 */
+        .section-wrap .section{
+            position:relative;
+            width:100%;
+            height:100%;
+            background-position:center center;
+            background-repeat:no-repeat;
+        }
+ 
+        .section-wrap .section .title{
+            width:100%;
+            position:absolute;
+            top:10%;
+            color:#fff;
+            font-size:2.4em;
+            text-align:center;
+        }
+        .section-wrap .section .title.active .tit{
+            opacity:1;
+            transform:translateY(-50px);
+            -webkit-transform:translateY(-50px);
+            transition:all 2s cubic-bezier(0.86,0,0.8,1);
+            -webkit-transition:all 2s cubic-bezier(0.86,0,0.8,1);
+        }
+        .section-wrap .section:nth-child(1){ background-image: url("img/EVEbackground2.jpg")}
+        .section-wrap .section:nth-child(2){ background-image: url("img/EVEbackground2.jpg")}
+        .section-wrap .section:nth-child(3){ background-image: url("img/EVEbackground2.jpg")}
+        .section-wrap .section:nth-child(4){ background-image: url("img/EVEbackground2.jpg")}
+        .section-wrap .section:nth-child(5){ background-image: url("img/EVEbackground2.jpg")}
+		.section-wrap .section:nth-child(6){ background-image: url("img/EVEbackground2.jpg")}
+		.section-wrap .section:nth-child(7){ background-image: url("img/EVEbackground2.jpg")}
+		.section-wrap .section:nth-child(8){ background-image: url("img/EVEbackground2.jpg")}
+ 
+        .section-btn li.on{
+           color: goldenrod;  /* 光标悬浮时显示的颜色 */
+           text-decoration:underline;/* 显示下划线 */
+        }
+ 
+        .arrow{
+            opacity:1;
+            animation:arrow 3s cubic-bezier(0.5,0,0.1,1) infinite;
+            position:absolute;
+            bottom:10px;
+            left:50%;
+            margin-left:-30px;
+            width:120px;
+            height:20px;
+            line-height:51px;
+            font-size:32px;
+            font-weight: normal;
+            text-align: center;
+            border-radius:100%; 
+            cursor:pointer;
+            box-sizing: border-box;
+        }
+ 
+        .arrow:hover{
+            animation-play-state:paused;
+        }
+ 
+        @keyframes arrow{
+            0%{}
+            100%{bottom:10px; opacity:1}
+            50%{bottom:50px; opacity:0.5}
+        }
+ 
+        @-webkit-keyframes arrow{
+            0%{}
+            100%{bottom:10px; opacity:1}
+            50% {bottom:50px; opacity:0.5}
+        }
+        .footer{
+            width:100%;
+            height:470px;
+            line-height: 470px;
+            text-align: center;
+            font-weight: 500;
+            background: #323232;
+            color:#999
+        }
+		
+		/* 顶部导航栏css */
+		.navBar{
+		    width:100%;/* 宽度 */
+		    position: fixed;/* 相对父元素定位于高度0px */
+		    top:0;
+		    z-index:99;/* 显示优先级 */
+		    height:80px;/* 导航栏高度 */
+		    background-color:rgba(0,0,0,0.7);/* 背景颜色为黑色 透明度为50% */
+			color:rgb(211,211,211);/* 字体颜色白色 */
+		}
+		.navBarone{  /* 星际公民log图 */
+			width: 140px;
+			margin: 10px 200px; /* 定位图片外边距 */
+		}
+		.navBartwo{  /* 超链接引导栏div */
+			width: 1100px;
+			position: absolute;/* 相对父元素定位于高度0px 位于右侧 */
+			top:0;
+			right:0 ;
+		}
+		.navBartwo ul{ /* 超链接列表 */
+			width: 1000px;
+			height: 50px;
+			list-style: none; /* 去除列表序号 */
+		}
+		.navBartwo li{  /* 超链接 */
+			margin-top: 28px;
+			list-style: none; /* 去除列表序号 */
+			display: inline-block;  /* 转化为行内块元素 */
+			margin-left: 25px; /* 设置列表项之间的间隔 */  
+		}
+		a:link{  /* 原 */
+			color: aliceblue;/* 改变未访问之前的超链接颜色 */
+			text-decoration: none;/* 去除超链接下划线 */
+		}
+		a:active{ /* 未释放  */
+			color: red;/* 左键点击未放开显示的颜色 */
+		}
+		a:visited{ /* 释放 */
+			color: aliceblue;/* 点击过后显示的颜色 */
+		}
+		a:hover{  /* 悬浮 */
+			color: goldenrod;  /* 光标悬浮时显示的颜色 */
+			text-decoration:underline;/* 显示下划线 */
+		}
+		/* 底部导航css */
+		.div006{  
+			width: 100%;
+			margin-top: 400px;	/* 设置底部导航距离页面的位置 */
+		}
+		.div_log{ /* log盒子 */
+			height: 130px;
+			width: 1400px;
+			border-top: solid lightslategrey ;/* 上下边框线 */
+			border-bottom: solid lightslategrey ;
+			margin: 0px auto;/* 边框 居中 */
+			text-align: center;/* log 居中 */
+		}
+		.div_log img{  /* log位置 */
+			padding: 40px 60px;
+		}
+		.div_text{ /* 文本 */
+			text-align: center; /* 文本居中 */
+		}
+		 .div_text p{ /* 文本颜色 大小  */
+			color: lavender;
+			font-size: 20px;
+		}
+		.div_text span{ /* 文本颜色 大小 */
+			color: lightslategrey;
+		    font-size: 16px;			
+		}
+		/* 首页视频 */
+		.videomp4{
+			position: absolute;/* 固定定位 上边 */
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		video{
+		     position: absolute;
+		     margin:auto;
+		     left: 0;
+		     right: 0;
+		     bottom: 0;
+		     top: 0;
+		     object-fit: fill;
+		     width:100%;
+		     height:130%;
+		}
+		.toptext{
+			width: 1200px;
+			position: absolute;
+			top: 200px;
+			left: 180px;
+			z-index: 99;
+			margin: 0px auto;
+		}	
+    </style>
+	<script src="js/jquery.js"></script>
+	<script type="text/javascript">
+	    //此处引用：鼠标滚轮mousewheel插件
+	    !function(a){"function"==typeof define&&define.amd?define(["jquery"],a):"object"==typeof exports?module.exports=a:a(jQuery)}(function(a){function b(b){var g=b||window.event,h=i.call(arguments,1),j=0,l=0,m=0,n=0,o=0,p=0;if(b=a.event.fix(g),b.type="mousewheel","detail"in g&&(m=-1*g.detail),"wheelDelta"in g&&(m=g.wheelDelta),"wheelDeltaY"in g&&(m=g.wheelDeltaY),"wheelDeltaX"in g&&(l=-1*g.wheelDeltaX),"axis"in g&&g.axis===g.HORIZONTAL_AXIS&&(l=-1*m,m=0),j=0===m?l:m,"deltaY"in g&&(m=-1*g.deltaY,j=m),"deltaX"in g&&(l=g.deltaX,0===m&&(j=-1*l)),0!==m||0!==l){if(1===g.deltaMode){var q=a.data(this,"mousewheel-line-height");j*=q,m*=q,l*=q}else if(2===g.deltaMode){var r=a.data(this,"mousewheel-page-height");j*=r,m*=r,l*=r}if(n=Math.max(Math.abs(m),Math.abs(l)),(!f||f>n)&&(f=n,d(g,n)&&(f/=40)),d(g,n)&&(j/=40,l/=40,m/=40),j=Math[j>=1?"floor":"ceil"](j/f),l=Math[l>=1?"floor":"ceil"](l/f),m=Math[m>=1?"floor":"ceil"](m/f),k.settings.normalizeOffset&&this.getBoundingClientRect){var s=this.getBoundingClientRect();o=b.clientX-s.left,p=b.clientY-s.top}return b.deltaX=l,b.deltaY=m,b.deltaFactor=f,b.offsetX=o,b.offsetY=p,b.deltaMode=0,h.unshift(b,j,l,m),e&&clearTimeout(e),e=setTimeout(c,200),(a.event.dispatch||a.event.handle).apply(this,h)}}function c(){f=null}function d(a,b){return k.settings.adjustOldDeltas&&"mousewheel"===a.type&&b%120===0}var e,f,g=["wheel","mousewheel","DOMMouseScroll","MozMousePixelScroll"],h="onwheel"in document||document.documentMode>=9?["wheel"]:["mousewheel","DomMouseScroll","MozMousePixelScroll"],i=Array.prototype.slice;if(a.event.fixHooks)for(var j=g.length;j;)a.event.fixHooks[g[--j]]=a.event.mouseHooks;var k=a.event.special.mousewheel={version:"3.1.12",setup:function(){if(this.addEventListener)for(var c=h.length;c;)this.addEventListener(h[--c],b,!1);else this.onmousewheel=b;a.data(this,"mousewheel-line-height",k.getLineHeight(this)),a.data(this,"mousewheel-page-height",k.getPageHeight(this))},teardown:function(){if(this.removeEventListener)for(var c=h.length;c;)this.removeEventListener(h[--c],b,!1);else this.onmousewheel=null;a.removeData(this,"mousewheel-line-height"),a.removeData(this,"mousewheel-page-height")},getLineHeight:function(b){var c=a(b),d=c["offsetParent"in a.fn?"offsetParent":"parent"]();return d.length||(d=a("body")),parseInt(d.css("fontSize"),10)||parseInt(c.css("fontSize"),10)||16},getPageHeight:function(b){return a(b).height()},settings:{adjustOldDeltas:!0,normalizeOffset:!0}};a.fn.extend({mousewheel:function(a){return a?this.bind("mousewheel",a):this.trigger("mousewheel")},unmousewheel:function(a){return this.unbind("mousewheel",a)}})});
+	 
+	    //页面初始化
+	    window.onload = function(){
+	        $('div.section-wrap').find('.section').eq(0).find('.title').addClass('active');
+	    }
+	 
+	    $(function(){
+	        var i=0;
+	        var $btn = $('ul.section-btn li'),
+	                $wrap = $('div.section-wrap'),
+	                $arrow = $('img.arrow');
+	 
+	        /*当前页面赋值*/
+	        function up(){i++;if(i==$btn.length){i=0}}
+	        function down(){i--;if(i<0){i=$btn.length-1}}
+	 
+	        function run(){
+	            var myRate;
+	            $btn.eq(i).addClass('on').siblings().removeClass('on');
+	            $wrap.find('.section').eq(i).find('.title').addClass('active');
+	            if(i == 8){
+	                //计算滚动到最后需要滚动的高度百分比
+	                //页尾高度470
+	                myRate=400+100*(470/Number(document.body.clientHeight)).toFixed(6)
+	            }else{
+	                myRate=100*i
+	            }
+	            //修改页面元素样式
+	            $("div.section-wrap").css("transform","translateY(-"+myRate+"%)");
+	            $("div.section-wrap").css("-webkit-transform","translateY(-"+myRate+"%)");
+	        }
+	 
+	        /*右侧按钮点击*/
+	        $btn.each(function(index) {
+	            $(this).click(function(){
+	                i=index;
+	                run();
+	            })
+	        })
+	 
+	        /*翻页按钮点击*/
+	        $arrow.one('click',go);
+	        function go(){
+	            up();
+	            run();
+	            setTimeout(function(){$arrow.one('click',go)},1000)
+	        }
+	 
+	        /*响应鼠标*/
+	        $wrap.one('mousewheel',mouse_);
+	        function mouse_(event){
+	            if(event.deltaY<0) {up()}
+	            else{down()}
+	            run();
+	            setTimeout(function(){$wrap.one('mousewheel',mouse_)},1000)
+	        }
+	 
+	        /*响应键盘上下键*/
+	        $(document).one('keydown',k);
+	        function k(event){
+	            var e=event||window.event;
+	            var key=e.keyCode||e.which||e.charCode;
+	            switch(key) {
+	                case 38: down();run();
+	                    break;
+	                case 40: up();run();
+	                    break;
+	            }
+	            setTimeout(function(){$(document).one('keydown',k)},1000);
+	        }
+	    })
+	</script>
+</head>
+<body>
+	
+  <div class="navBar">
+      <div class="navBarone">星际 <img src="img/logtext.png" height="60px" width="60px"/> 公民</div>
+  	<div class="navBartwo">
+  		<ul class="section-btn">
+  			<li class="on"><a>新伊甸</a></li>
+  			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+  			<li><a>逐鹿星河</a></li>
+  			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+  			<li><a>百年征程</a></li>
+  			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+  			<li><a>成员档案</a></li>
+  			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+  			<li><a>缔造者</a></li>
+  			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+  			<li><a>学院部</a></li>
+  			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+  			<li><a>数字生命</a></li>
+  			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+  			<li><a>联盟通知</a></li>
+  		</ul>
+  	</div>
+  </div>
+
+<div class="section-wrap">
+    <div class="section">
+        <div class="title"></div>
+		<div class="videomp4">
+			<img src="img/toptext.png" class="toptext"/>
+			<video muted autoplay="autoplay" loop="loop">
+				<source src="video/xhzz.mp4">
+			</video>
+		</div>
+    </div>
+    <div class="section">
+        <div class="title">
+            
+        </div>
+    </div>
+    <div class="section">
+        <div class="title">
+            
+        </div>
+    </div>
+    <div class="section">
+        <div class="title">
+            
+        </div>
+    </div>
+    <div class="section">
+        <div class="title">
+            
+        </div>
+    </div>
+	<div class="section">
+	    <div class="title">
+	        
+	    </div>
+	</div>
+	<div class="section">
+	    <div class="title">
+	        
+	    </div>
+	</div>
+	<div class="section">
+	    <div class="title">
+	        <div class="div006">
+	        	<div class="div_log">
+	        		<img src="img/log1.png" width="50px" height="50px"/>
+	        		<img src="img/log3.png" width="50px" height="50px"/>
+	        		<img src="img/log2.png" width="50px" height="50px"/>
+	        		<img src="img/log4.png" width="50px" height="50px"/>
+	        	</div>
+	        	<div class="div_text">
+	        		<p>泛人类联合命运共同体</p>
+	        			<span>【艾玛帝国】【加达里合众国】【盖伦特联邦】【米玛塔尔共和国】</span><br />
+	        		<span>批准文号：国新出审[2032]540 号 出版物号：ISBN 978-7-4988-0760-7 ICP备案：B2-20090191-18</span>
+	        	</div>
+	        </div>
+	    </div>
+	</div>
+</div>
+<img src="../img/dt.png"/ class="arrow">
+</body>
+</html>
